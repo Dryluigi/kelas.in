@@ -1,0 +1,1 @@
+<footer class="h-72 w-full bg-gray-800"></footer>
