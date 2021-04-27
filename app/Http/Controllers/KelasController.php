@@ -16,10 +16,10 @@ class KelasController extends Controller
 
     public function show(Kelas $kelas) 
     {
+        $this->authorize('show', $kelas);
+        
         $accountClassData = $kelas->findClassDataByAccountId(auth()->user()->id);
         $user = auth()->user();
-
-        // dd($kelas->getUserRole($user));
         
         return view('classes.show')->with([
             'user' => $user,
@@ -83,6 +83,8 @@ class KelasController extends Controller
 
     public function addUser(Kelas $kelas, Request $request)
     {
+        $this->authorize('addUser', $kelas);
+        
         $this->validate($request, [
             'email' => 'required|email',
             'role_id' => 'required',
@@ -109,6 +111,8 @@ class KelasController extends Controller
 
     public function deleteUser(Kelas $kelas, Account $account, Request $request)
     {
-        dd('sip');
+        $this->authorize('deleteUser', $kelas);
+        
+        dd('t e r d e l e t e');
     }
 }

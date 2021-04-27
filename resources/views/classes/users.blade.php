@@ -2,11 +2,13 @@
 
 @section('content')
 
+@can('addUser', $class)
 <div class="flex pb-4">
     <a href="{{ route('classes.users.invite', $class)}}">
         <div class="btn-green">Tambah anggota</div>
     </a>
 </div>
+@endCan
 
 <h3 class="font-semibold text-xl pb-4">Daftar anggota kelas</h3>
 
@@ -43,6 +45,8 @@
                 </td>
                 <td class="p-4">{{$member->pivot->role}}</td>
                 <td class="p-4 flex justify-center space-x-2">
+
+                    @can('updateUser', $class)
                     <form action="{{ 'test' }}" method="POST">
                         @csrf
                         <div class="relative w-6 h-6">
@@ -52,6 +56,9 @@
                             </svg>
                         </div>
                     </form>
+                    @endCan
+
+                    @can('deleteUser', $class)
                     <form action="{{ route('classes.users.delete', [$class, $member]) }}" method="POST">
                         @csrf
                         <div class="relative w-6 h-6">
@@ -61,6 +68,7 @@
                             </svg>
                         </div>
                     </form>
+                    @endCan
                 </td>
             </tr>
             @endforeach

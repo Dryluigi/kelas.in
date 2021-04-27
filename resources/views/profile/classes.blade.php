@@ -7,6 +7,7 @@
         <div class="btn-indigo">Buat kelas</div>
     </a>
 </div>
+
 @if($classes->count())
 <div class="overflow-y-auto">
     <div class="flex flex-wrap py-2">

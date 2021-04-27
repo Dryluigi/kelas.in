@@ -27,6 +27,11 @@ class Kelas extends Model
             ->withTimestamps();
     }
 
+    public function leader()
+    {
+        return $this->accounts()->wherePivot('role_id', '0');
+    }
+
     public function findClassDataByAccountId($accountId)
     {
         return DB::table('class_account')
@@ -48,6 +53,16 @@ class Kelas extends Model
                     ->where('class_id', $class->id)
                     ->where('account_id', $account->id);
         })->first()->role;
+    }
+
+    public function containsUser(Account $account)
+    {
+        $user = DB::table('class_account')
+            ->where('class_id', $this->id)
+            ->where('account_id', $account->id)
+            ->first();
+        
+        return $user != null;
     }
 
     public static function getAllRoles()
