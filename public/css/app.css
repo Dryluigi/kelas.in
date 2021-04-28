@@ -31874,6 +31874,11 @@ video {
   color: rgba(255, 255, 255, var(--tw-text-opacity));
 }
 
+.sidebar-menu-active {
+  --tw-text-opacity: 1;
+  color: rgba(229, 231, 235, var(--tw-text-opacity));
+}
+
 @media (min-width: 640px) {
   .sm\:container {
     width: 100%;

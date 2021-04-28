@@ -57,7 +57,6 @@ class PostController extends Controller
         $data['post'] = $post;
 
         return view('posts.show')->with($data);
-        // dd('show post');
     }
 
     public function edit(Kelas $kelas, Post $post)

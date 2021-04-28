@@ -13,3 +13,7 @@
 .btn-green {
     @apply bg-green-700 text-white font-semibold px-8 py-2 rounded;
 }
+
+.sidebar-menu-active {
+    @apply text-gray-200;
+}

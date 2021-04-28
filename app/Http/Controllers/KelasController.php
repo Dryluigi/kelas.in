@@ -20,9 +20,6 @@ class KelasController extends Controller
 
         $data = $this->getTemplateData($kelas);
         
-        $accountClassData = $kelas->findClassDataByAccountId(auth()->user()->id);
-        $user = auth()->user();
-        
         return view('classes.show')->with($data);
     }
 
