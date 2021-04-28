@@ -65,7 +65,7 @@
                             </div>
                         </li>
                     </a>
-                    <a href="#">
+                    <a href="{{ route('classes.posts', $class) }}">
                         <li class="hover:bg-indigo-800 cursor-pointer">
                             <div class="flex items-center p-3 space-x-2 text-gray-400">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">

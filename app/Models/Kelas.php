@@ -4,8 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\ClassMember;
 use Illuminate\Support\Facades\DB;
+use App\Models\Post\Post;
 
 class Kelas extends Model
 {
@@ -29,7 +29,12 @@ class Kelas extends Model
 
     public function leader()
     {
-        return $this->accounts()->wherePivot('role_id', '0');
+        return $this->accounts()->wherePivot('role_id', env('KETUA_ID', '0'));
+    }
+
+    public function posts()
+    {
+        return $this->hasMany(Post::class, 'class_id', 'id');
     }
 
     public function findClassDataByAccountId($accountId)

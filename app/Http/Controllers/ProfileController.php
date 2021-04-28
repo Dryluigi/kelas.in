@@ -36,13 +36,14 @@ class ProfileController extends Controller
         }
     }
 
-    public function class()
+    public function classes()
     {
         $classes = Kelas::findByAccountId(auth()->user()->id);
 
         return view('profile.classes')->with([
             'user' => auth()->user(),
-            'classes' => $classes]);
+            'classes' => $classes
+        ]);
     }
 
     public function classesCreate()

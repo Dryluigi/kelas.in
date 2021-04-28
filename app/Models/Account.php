@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use App\Models\User;
 use App\Models\ClassMember;
 use App\Models\Kelas;
+use App\Models\Post\Post;
 
 class Account extends Authenticatable
 {
@@ -53,5 +54,44 @@ class Account extends Authenticatable
         return $this->belongsToMany(Kelas::class, 'class_account', 'account_id', 'class_id')
             ->withPivot('nomor_induk', 'nomor_presensi', 'role_id')
             ->withTimestamps();
+    }
+
+    public function class(Kelas $kelas)
+    {
+        return $this->classes()->where('class_id', $kelas->id);
+    }
+
+    public function isLeader(Kelas $kelas)
+    {
+        $user = $this->getUserByRoleAndClass($kelas, env('KETUA_ID', '0'));
+
+        return $user != null;
+    }
+
+    public function isSecretary(Kelas $kelas)
+    {
+        $user = $this->getUserByRoleAndClass($kelas, env('SEKRETARIS_ID', '2'));
+
+        return $user != null;
+    }
+
+    public function isFinancialManager(Kelas $kelas)
+    {
+        $user = $this->getUserByRoleAndClass($kelas, env('BENDAHARA_ID', '3'));
+
+        return $user != null;
+    }
+
+    public function posts()
+    {
+        return $this->hasMany(Post::class, 'user_id', 'id');
+    }
+
+    private function getUserByRoleAndClass(Kelas $kelas, $role_id)
+    {
+        return $this->classes()
+            ->where('class_id', $kelas->id)
+            ->wherePivot('role_id', $role_id)
+            ->first();
     }
 }

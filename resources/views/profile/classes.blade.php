@@ -16,7 +16,6 @@
             <div class="border border-gray-300 mr-4 my-2 rounded-lg h-72 w-72 flex flex-col overflow-hidden">
                 <div class="h-20 bg-red-400 flex-none flex flex-col justify-center px-2">
                     <h4 class="text-2xl text-white font-bold leading-none">{{ $class->nama }}</h4>
-                    <p class="text-sm text-gray-600">test</p>
                 </div>
                 <div class="flex-auto px-2">
                     {{ $class->deskripsi }}
