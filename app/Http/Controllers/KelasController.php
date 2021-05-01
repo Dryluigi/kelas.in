@@ -121,7 +121,9 @@ class KelasController extends Controller
             'role_id' => 'required',
         ]);
 
-        $kelas->accounts()->where('account_id', $account->id)->update($request->only('nomor_induk', 'nomor_presensi', 'role_id'));
+        $kelas->accounts()
+            ->where('account_id', $account->id)
+            ->update($request->only('nomor_induk', 'nomor_presensi', 'role_id'));
 
         $data = $this->getTemplateData($kelas);
         $data['success'] = 'Berhasil update data anggota';
@@ -140,6 +142,48 @@ class KelasController extends Controller
         $kelas->accounts()->detach($account);
 
         return back()->with(['success' => 'Anggota berhasil dihapus']);
+    }
+
+    public function showUser(Kelas $kelas, Account $account)
+    {
+        $userClass = $kelas->accounts()
+            ->where('account_id', $account->id)
+            ->first();
+        
+        $data = $this->getTemplateData($kelas);
+        $data['userClass'] = $userClass;
+        
+        return view('classes.users.show')->with($data);
+    }
+
+    public function editProfile(Kelas $kelas)
+    {
+        $userClass = $kelas->accounts()
+            ->where('account_id', auth()->user()->id)
+            ->first();
+        
+        $data = $this->getTemplateData($kelas);
+        $data['userClass'] = $userClass;
+        
+        return view('classes.users.editProfile')->with($data);
+    }
+
+    public function updateProfile(Request $request, Kelas $kelas)
+    {
+        $this->validate($request, [
+            'nama' => 'required',
+        ]);
+
+        auth()->user()
+            ->user()
+            ->update($request->only('nama', 'alamat', 'nomor_telepon'));
+
+        $kelas->accounts()
+            ->updateExistingPivot(auth()->user()->id, $request->only('nomor_induk', 'nomor_presensi'));
+        
+        $data = $this->getTemplateData($kelas);
+
+        return redirect()->route('classes.users.show', [$kelas, auth()->user()])->with($data);
     }
 
     private function getTemplateData(Kelas $kelas)

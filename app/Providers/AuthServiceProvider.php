@@ -20,6 +20,8 @@ class AuthServiceProvider extends ServiceProvider
         // 'App\Models\Model' => 'App\Policies\ModelPolicy',
         Kelas::class => KelasPolicy::class,
         Post::class => PostPolicy::class,
+        Course::class => CoursePolicy::class,
+        CourseGroup::class => CourseGroupPolicy::class,
     ];
 
     /**

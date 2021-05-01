@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use App\Models\Post\Post;
+use App\Models\Course\Course;
+use App\Models\Course\CourseGroup;
 
 class Kelas extends Model
 {
@@ -37,6 +39,16 @@ class Kelas extends Model
         return $this->hasMany(Post::class, 'class_id', 'id');
     }
 
+    public function courses()
+    {
+        return $this->hasMany(Course::class, 'class_id', 'id');
+    }
+
+    public function courseGroups()
+    {
+        return $this->hasMany(CourseGroup::class, 'class_id', 'id');
+    }
+
     public function findClassDataByAccountId($accountId)
     {
         return DB::table('class_account')
@@ -51,13 +63,12 @@ class Kelas extends Model
         $class = $this;
 
         return DB::table('class_member_roles')
-            ->select('role')
             ->where('id', function ($query) use ($class, $account) {
             $query->select('role_id')
                     ->from('class_account')
                     ->where('class_id', $class->id)
                     ->where('account_id', $account->id);
-        })->first()->role;
+        })->first();
     }
 
     public function containsUser(Account $account)
@@ -68,6 +79,16 @@ class Kelas extends Model
             ->first();
         
         return $user != null;
+    }
+
+    public function getCourses(CourseGroup $courseGroup, Day $day)
+    {
+        return $this->courseGroups()
+            ->where('class_id', $this->id)
+            ->where('id', $courseGroup->id)
+            ->courses()
+            ->where('day_id', $day->id)
+            ->get();
     }
 
     public static function getAllRoles()

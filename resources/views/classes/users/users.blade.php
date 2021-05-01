@@ -25,6 +25,8 @@
             <th class="p-4">Nama</th>
             <th class="p-4">Nomor Induk</th>
             <th class="p-4">Nomor Presensi</th>
+            <th class="p-4">Alamat</th>
+            <th class="p-4">Nomor Telepon</th>
             <th class="p-4">Role</th>
             <th class="p-4">Action</th>
         </thead>
@@ -32,35 +34,58 @@
             @foreach($members as $member)
             <tr>
                 <td class="p-4">
-                    {{ $loop->index + 1}}
+                    {{ $loop->index + 1 }}
                 </td>
-                <td class="p-4">{{$member->user->nama}}</td>
+                <td class="p-4">{{ $member->user->nama }}</td>
                 <td class="p-4">
                     @if($member->pivot->nomor_induk)
-                        {{$member->pivot->nomor_induk}}
+                        {{ $member->pivot->nomor_induk }}
                     @else
                         <span class="text-red-500">Belum diset</span>
                     @endif
                 </td>
                 <td class="p-4">
                     @if($member->pivot->nomor_presensi)
-                        {{$member->pivot->nomor_presensi}}
+                        {{ $member->pivot->nomor_presensi }}
                     @else
                         <span class="text-red-500">Belum diset</span>
                     @endif
                 </td>
-                <td class="p-4">{{$member->pivot->role}}</td>
+                <td class="p-4">
+                    @if($member->user->alamat)
+                        {{ $member->user->alamat }}
+                    @else
+                        <span class="text-red-500">Belum diset</span>
+                    @endif
+                </td>
+                <td class="p-4">
+                    @if($member->user->nomor_telepon)
+                        {{ $member->user->nomor_telepon }}
+                    @else
+                        <span class="text-red-500">Belum diset</span>
+                    @endif
+                </td>
+                <td class="p-4">{{ $member->pivot->role }}</td>
                 <td class="p-4 flex justify-center space-x-2">
+                    <a href="{{ route('classes.users.show', [$class, $member]) }}">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="text-blue-600 h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                        </svg>
+                    </a>
                     @if($member->pivot->account_id !== $user->id)
+                        @can('updateUser', $class)
                         <a href="{{ route('classes.users.edit', [$class, $member]) }}">
                             <svg xmlns="http://www.w3.org/2000/svg" class="text-yellow-600 h-6 w-6 pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                             </svg>
                         </a>
+                        @endcan
 
                         @can('deleteUser', $class)
                         <form action="{{ route('classes.users.delete', [$class, $member]) }}" method="POST">
                             @csrf
+                            @method('DELETE')
                             <div class="relative w-6 h-6">
                                 <input type="submit" class="bg-transparent w-full h-full cursor-pointer" value="">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="absolute left-0 bottom-0 text-red-600 h-full w-full pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor">
