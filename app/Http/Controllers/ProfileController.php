@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use App\Models\Kelas;
+
 
 class ProfileController extends Controller
 {
@@ -21,15 +23,22 @@ class ProfileController extends Controller
     {
         $this->validate($request, [
             'nama' => 'required|max:255',
+            'foto_profil' => 'image',
         ]);
         
-        $isUpdated = auth()->user()->user()->update(
-            $request->only(
-                'nama', 
-                'alamat', 
-                'tanggal_lahir', 
-                'nomor_telepon')
+        $updatedData = $request->only(
+            'nama', 
+            'alamat', 
+            'tanggal_lahir', 
+            'nomor_telepon'
         );
+
+        if($request->foto_profil) {
+            $newFileName = $this->saveFotoProfil($request);
+            $updatedData['foto_profil'] = $newFileName;
+        }
+
+        $isUpdated = auth()->user()->user()->update($updatedData);
 
         if($isUpdated) {
             return back()->with('success', 'Profil berhasil diperbarui.');
@@ -51,5 +60,19 @@ class ProfileController extends Controller
         return view('profile.classes.create')->with([
             'user' => auth()->user(),
         ]);
+    }
+
+    public function assignments()
+    {
+        dd(auth()->user()->assignments());
+    }
+
+    private function saveFotoProfil(Request $request) {
+        $extension = $request->foto_profil->getClientOriginalExtension();
+        $newFileName = auth()->user()->id . "." . $extension;
+
+        Storage::disk('profile_images')->put($newFileName, $request->foto_profil->get());
+
+        return $newFileName;
     }
 }

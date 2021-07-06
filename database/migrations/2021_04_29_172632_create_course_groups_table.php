@@ -15,7 +15,7 @@ class CreateCourseGroupsTable extends Migration
     {
         Schema::create('course_groups', function (Blueprint $table) {
             $table->id();
-            $table->string('nama')->unique();
+            $table->string('nama');
             $table->text('deskripsi')->nullable();
             $table->foreignId('class_id')->constrained('classes');
             $table->timestamps();

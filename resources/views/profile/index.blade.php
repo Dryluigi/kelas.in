@@ -4,7 +4,7 @@
 
 <h3 class="text-xl font-bold">Profilmu</h3>
 
-<form action="{{ route('profile.update') }}" class="py-4 space-y-4 w-1/2" method="POST">
+<form action="{{ route('profile.update') }}" class="py-4 space-y-4 w-1/2" method="POST" enctype="multipart/form-data">
     @method('PUT')
     @csrf
     <div class="flex flex-col space-y-2">
@@ -27,6 +27,10 @@
     <div class="flex flex-col space-y-2">
         <label class="flex-none" for="nomor_telepon">Nomor Telepon</label>
         <input type="text" name="nomor_telepon" class="p-1 border border-gray-400 rounded-md flex-auto" value="{{ $user->user->nomor_telepon }}">
+    </div>
+    <div class="flex flex-col space-y-2">
+        <label class="flex-none" for="foto_profil">Foto Profil</label>
+        <input type="file" name="foto_profil" class="p-1 border border-gray-400 rounded-md flex-auto">
     </div>
     <input type="submit" class="btn-indigo cursor-pointer" value="Update">
     

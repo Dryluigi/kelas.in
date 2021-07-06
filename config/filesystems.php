@@ -52,6 +52,20 @@ return [
             'endpoint' => env('AWS_ENDPOINT'),
         ],
 
+        'profile_images' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/profile_images'),
+            'url' => env('APP_URL').'/storage/profile_images',
+            'visibility' => 'public',
+        ],
+
+        'class_cover_images' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/class_cover_images'),
+            'url' => env('APP_URL').'/storage/class_cover_images',
+            'visibility' => 'public',
+        ],
+
     ],
 
     /*

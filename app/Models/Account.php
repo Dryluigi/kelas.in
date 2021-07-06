@@ -9,6 +9,8 @@ use Illuminate\Notifications\Notifiable;
 use App\Models\User;
 use App\Models\ClassMember;
 use App\Models\Kelas;
+use App\Models\ClassAccount;
+use App\Models\Assignment;
 use App\Models\Post\Post;
 
 class Account extends Authenticatable
@@ -61,6 +63,11 @@ class Account extends Authenticatable
         return $this->classes()->where('class_id', $kelas->id);
     }
 
+    public function classAccounts()
+    {
+        return $this->hasMany(ClassAccount::class);
+    }
+
     public function isLeader(Kelas $kelas)
     {
         $user = $this->getUserByRoleAndClass($kelas, env('KETUA_ID', '0'));
@@ -85,6 +92,18 @@ class Account extends Authenticatable
     public function posts()
     {
         return $this->hasMany(Post::class, 'user_id', 'id');
+    }
+
+    public function assignments()
+    {
+        $assignments = Assignment::join('courses', 'assignments.course_id', 'courses.id')
+            ->join('classes', 'courses.class_id', 'classes.id')
+            ->join('class_account', 'class_account.class_id', 'classes.id')
+            ->join('accounts', 'class_account.account_id', 'accounts.id')
+            ->where('accounts.id', $this->id)
+            ->get();
+
+        return $assignments;
     }
 
     private function getUserByRoleAndClass(Kelas $kelas, $role_id)

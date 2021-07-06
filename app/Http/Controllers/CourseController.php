@@ -10,6 +10,9 @@ use App\Models\Day;
 
 class CourseController extends Controller
 {
+    const COURSE_GROUP_ACTIVE = 1;
+    const COURSE_GROUP_NOT_ACTIVE = 0;
+    
     public function __construct()
     {
         $this->middleware(['auth']);
@@ -91,13 +94,33 @@ class CourseController extends Controller
         $this->validate($request, [
             'nama' => 'required',
         ]);
+        
+        $is_active = $request->is_active != null ? self::COURSE_GROUP_ACTIVE : self::COURSE_GROUP_NOT_ACTIVE;
+        $input = $request->only('nama', 'deskripsi');
+        $input['is_active'] = $is_active;
+        
+        if($is_active) {
+            $kelas->courseGroups()->update(['is_active', self::COURSE_GROUP_NOT_ACTIVE]);
+        }
 
-        $kelas->courseGroups()->create($request->only('nama', 'deskripsi'));
+        $kelas->courseGroups()->create($input);
         
         $data = $this->getTemplateData($kelas);
         $data['success'] = 'Kelompok mata pelajaran berhasil dibuat';
 
         return redirect()->route('classes.courses', $kelas)->with($data);
+    }
+
+    public function show(Kelas $kelas, Course $course)
+    {
+        $data = $this->getTemplateData($kelas);
+        $data['course'] = $kelas->courses()->where('id', $course->id)->first();
+
+        if($data['course']) {
+            $data['assignments'] = $data['course']->assignments()->get();
+        }
+        
+        return view('courses.show')->with($data);
     }
 
     public function edit(Kelas $kelas, Course $course)
@@ -128,8 +151,10 @@ class CourseController extends Controller
         return redirect()->route('classes.courses', $kelas)->with($data);
     }
 
-    public function delete(Kelas $kelas, Course $course)
+    public function destroy(Kelas $kelas, Course $course)
     {
+        $this->authorize('delete', [$course, $kelas]);
+        
         $course = $kelas->courses()->where('id', $course->id)->first();
 
         $course->delete();

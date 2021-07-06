@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use App\Models\Kelas;
 use App\Models\Account;
 use App\Models\ClassMemberRole;
+use App\Models\Day;
 
 class KelasController extends Controller
 {
@@ -19,10 +21,35 @@ class KelasController extends Controller
         $this->authorize('show', $kelas);
 
         $data = $this->getTemplateData($kelas);
+        $data['members'] = $kelas->accounts()->count();
+        $data['assignments'] = $kelas->activeAssignments()->count();
+        $data['courses'] = $kelas->activeCourseGroup()
+            ->join('courses', 'courses.course_group_id', 'course_groups.id')
+            ->where('courses.day_id', Day::today())
+            ->get();
+        $data['chores'] = $kelas->assignedUserChores()
+            ->where('account_id', auth()->user()->id)
+            ->where('day_id', Day::today())
+            ->with('chore')
+            ->get();
+        $data['posts'] = $kelas->posts()
+            ->orderBy('created_at', 'desc')
+            ->limit(3)
+            ->with('user')
+            ->get();
+
+        // dd($data['posts']);
         
         return view('classes.show')->with($data);
     }
 
+    public function create()
+    {
+        return view('classes.create')->with([
+            'user' => auth()->user(),
+        ]);
+    }
+    
     public function store(Request $request)
     {
         $this->validate($request, [
@@ -39,11 +66,43 @@ class KelasController extends Controller
         return redirect()->route('profile.classes');
     }
 
-    public function create()
+    public function edit(Kelas $kelas)
     {
-        return view('classes.create')->with([
-            'user' => auth()->user(),
+        $this->authorize('edit', $kelas);
+
+        $data = $this->getTemplateData($kelas);
+
+        return view('classes.edit')->with($data);
+    }
+
+    public function update(Request $request, Kelas $kelas)
+    {
+        $this->authorize('edit', $kelas);
+        
+        $this->validate($request, [
+            'nama' => 'required|max:255',
+            'instansi' => 'max:255',
+            'cover_image' => 'image',
         ]);
+
+        $updatedData = $request->only(
+            'nama', 
+            'deskripsi', 
+            'instansi',
+        );
+
+        if($request->cover_image) {
+            $newFileName = $this->saveCoverImage($request, $kelas);
+            $updatedData['cover_image'] = $newFileName;
+        }
+
+        $kelas->update($updatedData);
+
+        $data = $this->getTemplateData($kelas);
+
+        // dd($data);
+
+        return view('classes.edit')->with($data);
     }
 
     public function users(Kelas $kelas)
@@ -64,6 +123,8 @@ class KelasController extends Controller
 
     public function invite(Kelas $kelas)
     {
+        $this->authorize('addUser', $kelas);
+        
         $roles = Kelas::getAllRoles();
         $user = auth()->user();
 
@@ -193,5 +254,14 @@ class KelasController extends Controller
             'class' => $kelas,
             'role' => $kelas->getUserRole(auth()->user()),
         ];
+    }
+
+    private function saveCoverImage(Request $request, Kelas $kelas) {
+        $extension = $request->cover_image->getClientOriginalExtension();
+        $newFileName = $kelas->id . "." . $extension;
+
+        Storage::disk('class_cover_images')->put($newFileName, $request->cover_image->get());
+
+        return $newFileName;
     }
 }

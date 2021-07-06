@@ -1,3 +1,8 @@
+@php
+use Illuminate\Support\Facades\Storage;
+// dd(Storage::disk('profile_images')->path($user->user->foto_profil));
+@endphp
+
 <!DOCTYPE html>
 <head>
     <meta charset="UTF-8" />
@@ -9,7 +14,7 @@
         <aside class="flex flex-col flex-none w-72 bg-indigo-700 border-r border-gray-7000">
             <a href="{{ route('profile') }}">
                 <div class="flex p-4 space-x-2 flex-none border-b border-indigo-800 pb-6">
-                    <div class="w-12 h-12 rounded-full bg-yellow-200 flex-none"></div>
+                    <img class="w-12 h-12 object-cover rounded-full flex-none" src="{{ Storage::disk('profile_images')->url($user->user->foto_profil) }}" alt="photo profile">
                     <div class="flex flex-col justify-center">
                         <h4 class="hover:underline text-lg font-semibold text-gray-100">{{ $user->user->nama}}</h4>
                         <p class="text-sm text-gray-300">{{ $user->email}}</p>
@@ -30,14 +35,16 @@
                             </div>
                         </li>
                     </a>
-                    <li class="hover:bg-indigo-800 cursor-pointer">
-                        <div class="flex items-center p-3 space-x-2 text-gray-400">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                            </svg>
-                            <h5 class="font-bold text-xl ">Tugas</h5>
-                        </div>
-                    </li>
+                    <a href="{{ route('profile.assignments') }}">
+                        <li class="hover:bg-indigo-800 cursor-pointer">
+                            <div class="flex items-center p-3 space-x-2 text-gray-400">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                                </svg>
+                                <h5 class="font-bold text-xl ">Tugas</h5>
+                            </div>
+                        </li>
+                    </a>
                 </ul>
             </div>
             <div class="flex flex-col border-t border-indigo-800">

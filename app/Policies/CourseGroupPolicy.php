@@ -19,22 +19,27 @@ class CourseGroupPolicy
         //
     }
 
-    public function create(Account $account, Kelas $kelas)
+    public function create(Account $account, CourseGroup $courseGroup, Kelas $kelas)
     {
         return $this->isLeaderOrSecretary($account, $kelas);
     }
 
-    public function edit(Account $account, Kelas $kelas)
+    public function show(Account $account, $courseGroup, $kelas)
+    {   
+        return $this->isLeaderOrSecretary($account, $kelas);
+    }
+
+    public function edit(Account $account, CourseGroup $courseGroup, Kelas $kelas)
     {
         return $this->isLeaderOrSecretary($account, $kelas);
     }
 
-    public function delete(Account $account, Kelas $kelas)
+    public function delete(Account $account, $courseGroup, $kelas)
     {
         return $this->isLeaderOrSecretary($account, $kelas);
     }
 
-    private function isLeaderOrSecretary(Account $account, Kelas $kelas)
+    private function isLeaderOrSecretary($account, $kelas)
     {
         $isLeader = $account->isLeader($kelas);
         $isSecretary = $account->isSecretary($kelas);

@@ -14,6 +14,7 @@ class CourseGroup extends Model
     protected $fillable = [
         'nama',
         'deskripsi',
+        'is_active'
     ];
 
     public function class()

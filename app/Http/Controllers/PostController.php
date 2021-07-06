@@ -54,7 +54,9 @@ class PostController extends Controller
     public function show(Kelas $kelas, Post $post)
     {
         $data = $this->getTemplateData($kelas);
-        $data['post'] = $post;
+        $data['post'] = $kelas->posts()->where('id', $post->id)->first();
+
+        // dd($data['post']);
 
         return view('posts.show')->with($data);
     }
@@ -64,7 +66,7 @@ class PostController extends Controller
         $this->authorize('edit', $post);
         
         $data = $this->getTemplateData($kelas);
-        $data['post'] = $post;
+        $data['post'] = $kelas->posts()->where('id', $post->id)->first();
 
         return view('posts.edit')->with($data);
     }
@@ -91,10 +93,17 @@ class PostController extends Controller
     {
         $this->authorize('delete', $post);
 
-        $post->delete();
-
+        $deletedPost = $kelas->posts()->where('id', $post->id)->first();
         $data = $this->getTemplateData($kelas);
-        $data['success'] = 'Post berhasil dihapus';
+
+        if($deletedPost) {
+            $deletedPost->delete();
+            $data['success'] = 'Post berhasil dihapus';    
+        } else {
+            $data['fail'] = 'Post gagal dihapus';
+        }
+        
+        
 
         return back()->with($data);
     }

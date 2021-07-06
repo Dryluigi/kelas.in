@@ -11,8 +11,11 @@ use Carbon\Carbon;
     <a href="{{ route('classes.courses.create', $class)}}">
         <div class="btn-green">Tambah mata pelajaran</div>
     </a>
-    <a href="{{ route('classes.courses.group.create', $class)}}">
+    <a href="{{ route('classes.course-groups.create', $class)}}">
         <div class="btn-blue">Tambah kelompok mata pelajaran</div>
+    </a>
+    <a href="{{ route('classes.course-groups', $class)}}">
+        <div class="btn-indigo">Manage mata pelajaran</div>
     </a>
 </div>
 @endcan
@@ -47,19 +50,23 @@ use Carbon\Carbon;
         <th class="p-4">No</th>
         <th class="p-4">Nama Mata Pelajaran</th>
         <th class="p-4">Pengajar</th>
-        <th class="p-4">Mulai</th>
-        <th class="p-4">Selesai</th>
+        <th class="p-4">Jam</th>
         <th class="p-4">Action</th>
     </thead>
     <tbody>
         @foreach($courses as $course)
         <tr>
-            <td class="p-4">{{ $loop->index + 1}}</td>
+            <td class="p-4">{{ $loop->index + 1 }}</td>
             <td class="p-4">{{ $course->nama }}</td>
             <td class="p-4">{{ $course->pengajar }}</td>
-            <td class="p-4">{{ Carbon::parse($course->start)->format('H:i') }}</td>
-            <td class="p-4">{{ Carbon::parse($course->end)->format('H:i') }}</td>
+            <td class="p-4">{{ Carbon::parse($course->start)->format('H:i') . " - " . Carbon::parse($course->end)->format('H:i') }}</td>
             <td class="p-4 flex justify-center space-x-2">
+                <a href="{{ route('classes.courses.show', [$class, $course])}}">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="text-blue-600 h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                    </svg>
+                </a>
                 @can('updateCourses', $class)
                 <a href="{{ route('classes.courses.edit', [$class, $course]) }}">
                     <svg xmlns="http://www.w3.org/2000/svg" class="text-yellow-600 h-6 w-6 pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor">

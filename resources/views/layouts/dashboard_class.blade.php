@@ -14,7 +14,7 @@
             <a href="{{ route('classes.users.show', [$class, $user]) }}">
                 <div class="flex space-x-2 p-4 flex-none border-b border-indigo-800 pb-6">
                     <div class="w-12 h-12 flex-none relative">
-                        <div class="w-full h-full rounded-full bg-yellow-200"></div>
+                        <img class="w-full h-full object-cover rounded-full flex-none" src="{{ Storage::disk('profile_images')->url($user->user->foto_profil) }}" alt="photo profile">
                         <small class="absolute -bottom-0.5 -translate-x-1/2 inline-block px-1 py-0.5 rounded-full text-xs font-semibold text-white bg-red-500">{{ $role->role }}</small>
                     </div>
                     <div class="flex flex-col justify-center">
@@ -35,9 +35,9 @@
                             </div>
                         </li>
                     </a>
-                    <a href="#">
+                    <a href="{{ route('classes.assignments', $class) }}">
                         <li class="hover:bg-indigo-800 cursor-pointer">
-                            <div class="flex items-center p-3 space-x-2 text-gray-400">
+                            <div class="flex items-center p-3 space-x-2 text-gray-400 {{ request()->routeIs('classes.assignments*') ? 'sidebar-menu-active' : '' }}">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                                 </svg>
@@ -57,7 +57,7 @@
                     </a>
                     <a href="{{ route('classes.courses', $class)}}">
                         <li class="hover:bg-indigo-800 cursor-pointer">
-                            <div class="flex items-center p-3 space-x-2 text-gray-400 {{ request()->routeIs('classes.courses*') ? 'sidebar-menu-active' : '' }}">
+                            <div class="flex items-center p-3 space-x-2 text-gray-400 {{ (request()->routeIs('classes.courses*') || request()->routeIs('classes.course-groups*')) ? 'sidebar-menu-active' : '' }}">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
                                 </svg>
@@ -75,13 +75,23 @@
                             </div>
                         </li>
                     </a>
-                    <a href="#">
+                    <a href="{{ route('classes.chores', $class) }}">
                         <li class="hover:bg-indigo-800 cursor-pointer">
-                            <div class="flex items-center p-3 space-x-2 text-gray-400">
+                            <div class="flex items-center p-3 space-x-2 text-gray-400 {{ (request()->routeIs('classes.chores*') || (request()->routeIs('classes.chore-groups*'))) ? 'sidebar-menu-active' : '' }}">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.121 14.121L19 19m-7-7l7-7m-7 7l-2.879 2.879M12 12L9.121 9.121m0 5.758a3 3 0 10-4.243 4.243 3 3 0 004.243-4.243zm0-5.758a3 3 0 10-4.243-4.243 3 3 0 004.243 4.243z" />
                                 </svg>    
                                 <h5 class="font-bold text-xl ">Jadwal Piket</h5>
+                            </div>
+                        </li>
+                    </a>
+                    <a href="{{ route('classes.finances', $class) }}">
+                        <li class="hover:bg-indigo-800 cursor-pointer">
+                            <div class="flex items-center p-3 space-x-2 text-gray-400 {{ request()->routeIs('classes.finances*') ? 'sidebar-menu-active' : '' }}">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
+                                </svg>
+                                <h5 class="font-bold text-xl ">Keuangan</h5>
                             </div>
                         </li>
                     </a>
@@ -121,7 +131,7 @@
             </div>
         </aside>
     
-        <main class="flex-auto p-4">
+        <main class="flex flex-col flex-auto p-4">
             
             @yield('content')
     

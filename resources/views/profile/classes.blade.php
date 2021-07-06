@@ -14,7 +14,7 @@
         @foreach($classes as $class)
         <a href="{{ route('classes.show', $class->id) }}">
             <div class="border border-gray-300 mr-4 my-2 rounded-lg h-72 w-72 flex flex-col overflow-hidden">
-                <div class="h-20 bg-red-400 flex-none flex flex-col justify-center px-2">
+                <div class="h-20 flex-none flex flex-col justify-center px-2" style="background-image: url('{{ Storage::disk('class_cover_images')->url($class->cover_image) }}'); background-size: cover; ">
                     <h4 class="text-2xl text-white font-bold leading-none">{{ $class->nama }}</h4>
                 </div>
                 <div class="flex-auto px-2">

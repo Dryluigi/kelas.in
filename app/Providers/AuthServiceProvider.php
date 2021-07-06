@@ -6,8 +6,16 @@ use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvid
 use Illuminate\Support\Facades\Gate;
 use App\Models\Kelas;
 use App\Models\Post\Post;
+use App\Models\Assignment;
+use App\Models\Chore\Chore;
+use App\Models\Finanec\Finance;
 use App\Policies\KelasPolicy;
 use App\Policies\PostPolicy;
+use App\Policies\Course\Course;
+use App\Policies\Course\CourseGroup;
+use App\Policies\AssignmentPolicy;
+use App\Policies\ChorePolicy;
+use App\Policies\FinancePolicy;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -22,6 +30,10 @@ class AuthServiceProvider extends ServiceProvider
         Post::class => PostPolicy::class,
         Course::class => CoursePolicy::class,
         CourseGroup::class => CourseGroupPolicy::class,
+        Assignment::class => AssignmentPolicy::class,
+        Chore::class => ChorePolicy::class,
+        ChoreGroup::class => ChoreGroupPolicy::class,
+        Finance::class => FinancePolicy::class,
     ];
 
     /**

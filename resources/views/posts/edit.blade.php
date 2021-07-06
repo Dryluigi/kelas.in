@@ -4,6 +4,7 @@
 
 <h3 class="text-xl font-bold">Edit post</h3>
 
+@if($post)
 <form action="{{ route('classes.posts.update', [$class, $post]) }}" class="py-4 space-y-4 w-1/2" method="POST">
     @csrf
     @method('PUT')
@@ -31,6 +32,11 @@
 
     <input type="submit" class="btn-indigo cursor-pointer" value="Update data">
 </form>
+@else
+
+<h4 class="text-2xl font-bold text-center">Tugas tidak ditemukan</h4>
+
+@endif
 
 
 @endSection

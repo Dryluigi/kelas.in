@@ -1,0 +1,50 @@
+Program ini adalah program berbasis web. Program ini bertujuan untuk melakukan manajemen dari kelas suatu sekolah atau kampus. User dapat membuat kelas lalu mengundang siapapun menjadi anggota kelasnya. program ini nantinya berbentuk seperti dashboard. Ada beberapa role pada aplikasi ini, yaitu:
+- Ketua kelas
+- Sekretaris
+- Bendahara
+- Anggota kelas
+Program ini berbentuk seperti dashboard. Tampilan utama adalah 
+
+Fitur:
+- Buat kelas sendiri, auto jadi ketua kelas
+- Input data tugas
+- Input data keuangan
+- Input data piket
+- Input jadwal kelas
+- Manajemen role anggota kelas
+- Pengumuman
+- Buat event
+- Buat post
+
+Privilege:
+Anggota Kelas:
+- Melihat data anggota lain dalam kelas tersebut
+- Melihat jadwal pelajaran
+- Melihat daftar tugas
+- Melihat daftar piket
+- Melihat keseluruhan keuangan kelas
+- Melihat post
+- Membuat post
+- Edit post
+
+Sekretaris
+- Input data tugas
+- Edit data tugas
+- Input data piket
+- Edit data piket
+- Input jadwal kelas
+- Edit jadwal kelas
+- Membuat pengumuman
+- Edit pengumuman
+- Membuat event
+- Edit data event
+
+Bendahara
+- Input data keuangan
+
+Ketua
+- Mengundang anggota kelas
+- Memberi role pada anggota kelas
+- Mengganti role anggota kelas
+- Menyerahkan role ketua kelas ke anggota lain
+- Menghapus kelas

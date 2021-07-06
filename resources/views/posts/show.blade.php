@@ -10,6 +10,7 @@ use Illuminate\Support\Str;
 <a href="{{ route('classes.posts', $class) }}">
     <span class="inline-block text-sm text-blue-500 hover:underline pb-2">Kembali</span>    
 </a>
+@if($post)
 <div class="">
     <div class="flex space-x-4">
         @can('delete', $post)
@@ -47,5 +48,11 @@ use Illuminate\Support\Str;
         <small class="text-sm">Tanggal dibuat: <span class="font-bold">{{ Carbon::parse($post->created_at)->format('d F Y | H:i') }}</span></small>
     </div>
 </div>
+
+@else
+
+<h4 class="text-2xl font-bold text-center">Tugas tidak ditemukan</h4>
+
+@endif
 
 @endSection

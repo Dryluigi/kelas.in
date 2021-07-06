@@ -26,6 +26,11 @@ class KelasPolicy
         return $kelas->containsUser($account);
     }
 
+    public function edit(Account $account, Kelas $kelas)
+    {
+        return $this->isLeader($account, $kelas);
+    }
+    
     public function addUser(Account $account, Kelas $kelas)
     {
         return $this->isLeader($account, $kelas);

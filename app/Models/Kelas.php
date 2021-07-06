@@ -8,6 +8,11 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Post\Post;
 use App\Models\Course\Course;
 use App\Models\Course\CourseGroup;
+use App\Models\Assignment;
+use App\Models\Chore\Chore;
+use App\Models\Chore\ChoreGroup;
+use App\Models\Finance\Finance;
+use Carbon\Carbon;
 
 class Kelas extends Model
 {
@@ -20,6 +25,7 @@ class Kelas extends Model
         'deskripsi',
         'instansi',
         'cover_image',
+        'cash',
     ];
 
     public function accounts()
@@ -44,9 +50,60 @@ class Kelas extends Model
         return $this->hasMany(Course::class, 'class_id', 'id');
     }
 
+    public function assignments()
+    {
+        return $this->hasManyThrough(
+            Assignment::class, 
+            Course::class, 
+            'class_id', 
+            'course_id', 
+            'id', 
+            'id'
+        );
+    }
+
+    public function activeAssignments()
+    {
+        $todayDatetime = Carbon::now();   
+
+        return $this->assignments()->where('deadline', '>', $todayDatetime);
+    }
+
+    public function oldAssignments()
+    {
+        $todayDatetime = Carbon::now();   
+
+        return $this->assignments()->where('deadline', '<=', $todayDatetime);
+    }
+
     public function courseGroups()
     {
         return $this->hasMany(CourseGroup::class, 'class_id', 'id');
+    }
+
+    public function activeCourseGroup()
+    {
+        return $this->courseGroups()->where('is_active',  '1');
+    }
+
+    public function chores()
+    {
+        return $this->hasManyThrough(Chore::class, ChoreGroup::class, 'class_id', 'chore_group_id', 'id', 'id');
+    }
+
+    public function choreGroups()
+    {
+        return $this->hasMany(ChoreGroup::class, 'class_id', 'id');
+    }
+
+    public function assignedUserChores()
+    {
+        return $this->hasMany(AssignedUserChore::class, 'class_id', 'id');
+    }
+
+    public function finances()
+    {
+        return $this->hasMany(Finance::class, 'class_id', 'id');
     }
 
     public function findClassDataByAccountId($accountId)
