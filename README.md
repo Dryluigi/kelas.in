@@ -1,62 +1,72 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+<h1 align="center" style="color: #1e00ff; margin-bottom: 0.1rem; font-weight: 800">Kelas.in</h1>
+<p align="center">♥ Platform Manajemen Kelas ♥</p>
+<hr style="height: 1px; margin: 0.5rem 0 1rem;"/>
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Tentang <span style="color: #1e00ff;">Kelas.in</span>
 
-## About Laravel
+<span style="color: #1e00ff; font-weight: bold;">Kelas.in</span> adalah platform manajemen kelas yang dibangun menggunakan Laravel. User dapat melakukan hal seperti membuat kelas, mengundang teman-temannya untuk masuk, menyusun jadwal kelas, dan lain sebagainya. Projek ini dibangun sebagai portofolio pribadi. 
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+<img src="https://i.imgur.com/W653Yiu.png" alt="Beranda">
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Beberapa fitur utama dari aplikasi ini adalah:
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- Buat kelasmu sendiri dan ajak temanmu bergabung
+- Role based, ada beberapa role yang disediakan, yaitu ketua kelas, sekretaris, bendahara, dan anggota kelas
+- Atur jadwal pelajaran kelasmu
+- Buat daftar tugas dan jangan lupa mengerjakan
+- Atur kas kelasmu dengan menginputkan pemasukan dan pengeluaran
+- Buat post dan berinteraksi dengan anggota kelas lain
 
-## Learning Laravel
+## Buat Kelasmu Sendiri
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Siapapun dapat membuat kelas. Cukup membuat akun dan memasukkan beberapa informasi kelas, kelas langsung dapat digunakan.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+<img src="https://i.imgur.com/HeOCq5t.png" alt="Beranda Kelas">
 
-## Laravel Sponsors
+Kelas-kelasmu juga akan ditampilkan pada dashboard profil. Tetap terorganisasi walaupun kelas menumpuk.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+## Beranda Kelas
 
-### Premium Partners
+Dapatkan informasi mengenai kelasmu hari itu. Beranda kelas memberikan banyak informasi mengenai kondisi kelas hari itu.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
+<img src="https://i.imgur.com/shgejzy.png" alt="Beranda Kelas">
 
-## Contributing
+## Jadwal Pelajaran
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Sekretaris dapat membuat jadwal pelajaran. Jadwal pelajaran dapat difilter berdasarkan hari dan grup yang telah dibuat.
 
-## Code of Conduct
+<img src="https://i.imgur.com/kN0yOxK.png" alt="Beranda Kelas">
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Mata pelajaran yang dibuat dapat dikelompokkan menjadi sebuah grup. Grup dapat diaktifkan atau dinonaktifkan oleh sekretaris kelas. Setiap mata pelajaran juga tertera nama pengajar.
 
-## Security Vulnerabilities
+## Tugas
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Sekretaris dapat menambahkan, menghapus, dan mengedit tugas. Tugas berelasi dengan mata pelajaran yang telah ditambahkan.
 
-## License
+<img src="https://i.imgur.com/TMfOD0r.png" alt="Beranda Kelas">
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Pada beranda tugas, tugas aktif dan lampau ditampilkan. Tugas aktif adalah tugas yang masih berada pada rentang _deadline_. Tugas lampau adalah **lima** tugas yang sudah melewati batas _deadline_.
+
+## Post Kelas
+
+Siapapun dapat membuat post. Post dibuat dengan tujuan untuk membentuk interaksi antar anggota kelas.
+
+<img src="https://i.imgur.com/jjjfdhN.png" alt="Beranda Kelas">
+
+Sebagai langkah manajemen, sekretaris dan ketua kelas dapat menghapus post. Pembuat post dapat juga melakukan edit maupun hapus post mereka.
+
+## Kas Kelas
+
+Keuangan kelas adalah hal yang penting. Buat keuangan kelasmu lebih transparan.
+
+<img src="https://i.imgur.com/UvuX9Im.png" alt="Beranda Kelas">
+
+Keuangan kelas dapat diedit oleh bendahara. Bendahara dapat menginputkan transaksi baru, baik itu pemasukan maupun pengeluaran. Secara otomatis, data yang diinputkan akan dikalkulasikan dengan total kas kelas.
+
+## Teknologi yang Digunakan
+
+Ada beberapa teknologi yang digunakan untuk mengembangkan platform ini.
+- HTML
+- TailwindCSS
+- Laravel
+- MySQL
